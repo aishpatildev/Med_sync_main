@@ -1,0 +1,27 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "MedSync/wsgi.py",
+        "use": "@vercel/python",
+        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+      },
+      {
+        "src": "med/build_files.sh",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "med/static"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/static/(.*)",
+        "dest": "/med/static/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/MedSync/wsgi.py"
+      }
+    ]
+  }
